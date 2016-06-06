@@ -2,13 +2,13 @@ FROM nvidia/cuda:7.5-cudnn4-devel
 
 MAINTAINER Sai Soundararaj <saip@outlook.com>
 
-ENV THEANO_VERSION=rel-0.8.2 \
-	TENSORFLOW_VERSION=0.8.0 \
-	TENSORFLOW_ARCH=gpu \
-	KERAS_VERSION=1.0.3 \
-	LASAGNE_VERSION=v0.1 \
-	TORCH_VERSION=latest \
-	CAFFE_VERSION=master
+ARG THEANO_VERSION=rel-0.8.2
+ARG TENSORFLOW_VERSION=0.8.0
+ARG TENSORFLOW_ARCH=gpu
+ARG KERAS_VERSION=1.0.3
+ARG LASAGNE_VERSION=v0.1
+ARG TORCH_VERSION=latest
+ARG CAFFE_VERSION=master
 
 RUN echo -e "\n**********************\nNVIDIA Driver Version\n**********************\n" && \
 	cat /proc/driver/nvidia/version && \
@@ -133,7 +133,7 @@ RUN git clone -b ${CAFFE_VERSION} --depth 1 https://github.com/BVLC/caffe.git /r
 ENV CAFFE_ROOT=/root/caffe
 ENV PYCAFFE_ROOT=$CAFFE_ROOT/python
 ENV PYTHONPATH=$PYCAFFE_ROOT:$PYTHONPATH \
-	  PATH=$CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
+	PATH=$CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
 
 RUN echo "$CAFFE_ROOT/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
 
