@@ -43,10 +43,10 @@ docker build -t dl-docker:cpu -f Dockerfile.cpu .
 ```bash
 docker build -t dl-docker:gpu -f Dockerfile.gpu .
 ```
-This will build a Docker image names `dl-docker` and tagged either `cpu` or `gpu` depending on the tag your specify. Also note that the appropriate `Dockerfile` has to be used.
+This will build a Docker image named `dl-docker` and tagged either `cpu` or `gpu` depending on the tag your specify. Also note that the appropriate `Dockerfile.<architecture>` has to be used.
 
 ## Running the Docker image as a Container
-Once we've built the image, we can have all the frameworks we need installed in it. We can now spin up one or more containers using this image.
+Once we've built the image, we have all the frameworks we need installed in it. We can now spin up one or more containers using this image, and you should be ready to [go deeper](http://imgur.com/gallery/BvuWRxq)
 
 **CPU Version**
 ```bash
@@ -55,7 +55,7 @@ docker run -it -p 8888:8888 6006:6006 -v /sharedfolder:/root/sharedfolder dl-doc
 	
 **GPU Version**
 ```bash
-nvidia-docker run -it -p 8888:8888 6006:6006 dl-docker:gpu bash
+nvidia-docker run -it -p 8888:8888 6006:6006 -v /sharedfolder:/root/sharedfolder dl-docker:gpu bash
 ```
 Note the use of `nvidia-docker` rather than just `docker`
 
@@ -69,7 +69,7 @@ Note the use of `nvidia-docker` rather than just `docker`
 
 ## Some common scenarios
 ### Jupyter Notebooks
-The container comes pre-installed with iPython and iTorch Notebooks, and you can use these to work with the deep learning frameworks. If you spin up the docker container with `docker-run -p <host-port>:<container-port>` (as shown above in the [instructions](#running-the-docker-image-as-a-container)), you will have access to these ports on your host and can access them at http://127.0.0.1:<host-port>. The default iPython notebook uses port 8888 and Tensorboard uses port 6006. Since we expose both these ports when we run the container, we can access them both from the host.
+The container comes pre-installed with iPython and iTorch Notebooks, and you can use these to work with the deep learning frameworks. If you spin up the docker container with `docker-run -p <host-port>:<container-port>` (as shown above in the [instructions](#running-the-docker-image-as-a-container)), you will have access to these ports on your host and can access them at `http://127.0.0.1:<host-port>`. The default iPython notebook uses port 8888 and Tensorboard uses port 6006. Since we expose both these ports when we run the container, we can access them both from the localhost.
 
 However, you still need to start the Notebook inside the container to be able to access it from the host. You can either do this from the container terminal by executing `jupyter notebook` or you can pass this command in directly while spinning up your container using the `docker run -it -p 8888:8888 6006:6006 dl-docker:cpu jupyter notebook` CLI. The Jupyter Notebook has both Python (for TensorFlow, Caffe, Theano, Keras, Lasagne) and iTorch (for Torch) kernels.
 
@@ -109,5 +109,12 @@ Keep in mind that the changes made inside Docker container are not persistent. L
 
 2. **Shared volume**: If you don't make changes to the image itself, but only create data (say, train a new Caffe model), then commiting the image each time is an overkill. In this case, it is easier to persist the data changes to a folder on your host OS using shared volumes. Simple put, the way this works is you share a folder from your host into the container. Any changes made to the contents of this folder from inside the container will persist, even after the container is killed. For more details, see Docker's docs on [Managing data in containers](https://docs.docker.com/engine/userguide/containers/dockervolumes/)
  
+### How do I update/install new libraries?
+You can one of:
+
+1. Modify the `Dockerfile` directly to install new or update your existing libraries. You will need to do a `docker build` after you do this. If you just want to update to a newer version of the DL framework(s), you can pass them as CLI parameter using the --build-arg tag ([see](-v /sharedfolder:/root/sharedfolder) for details). The framework versions are defined at the top of the `Dockerfile`. For example, `docker build -t dl-docker:cpu -f Dockerfile.cpu --build-arg TENSORFLOW_VERSION=0.9.0rc0 .`
+
+2. You can log in to a container and install the frameworks interactively using the terminal. After you've made sure everything looks good, you can commit the new contains and store it as an image
+
 ### What operating systems are supported?
-Docker is supported on all the OSes mentioned here: [Install Docker Engine](https://docs.docker.com/engine/installation/) (i.e. different flavors of Linux, Windows and OS X). The CPU version (Dockerfile.cpu) will run on all the above operating systems. However, the GPU version will only run on Linux OS. This is because Docker runs inside a virtual machine on Windows and OS X. Virtual machines don't have direct access to the GPU on the host. Unless PCI passthrough is implemented for these hosts, GPU support isn't available on non-Linux OSes at the moment.
+Docker is supported on all the OSes mentioned here: [Install Docker Engine](https://docs.docker.com/engine/installation/) (i.e. different flavors of Linux, Windows and OS X). The CPU version (Dockerfile.cpu) will run on all the above operating systems. However, the GPU version (Dockerfile.gpu) will only run on Linux OS. This is because Docker runs inside a virtual machine on Windows and OS X. Virtual machines don't have direct access to the GPU on the host. Unless PCI passthrough is implemented for these hosts, GPU support isn't available on non-Linux OSes at the moment.
