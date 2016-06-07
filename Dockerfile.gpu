@@ -10,11 +10,11 @@ ARG LASAGNE_VERSION=v0.1
 ARG TORCH_VERSION=latest
 ARG CAFFE_VERSION=master
 
-RUN echo -e "\n**********************\nNVIDIA Driver Version\n**********************\n" && \
-	cat /proc/driver/nvidia/version && \
-	echo -e "\n**********************\nCUDA Version\n**********************\n" && \
-	nvcc -V && \
-	echo -e "\n\nBuilding your Deep Learning Docker Image...\n"
+#RUN echo -e "\n**********************\nNVIDIA Driver Version\n**********************\n" && \
+#	cat /proc/driver/nvidia/version && \
+#	echo -e "\n**********************\nCUDA Version\n**********************\n" && \
+#	nvcc -V && \
+#	echo -e "\n\nBuilding your Deep Learning Docker Image...\n"
 
 # Install some dependencies
 RUN apt-get update && apt-get install -y \
