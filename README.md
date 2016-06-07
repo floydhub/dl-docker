@@ -1,5 +1,5 @@
 ## All-in-one Docker image for Deep Learning
-Here are Dockerfiles to get you up and running with a fully functional deep learning machine. It contains all the popular deep learning frameworks with CPU and GPU support (CUDA and cuDNN included). The CPU version should work on Linux, Windows and OS X. The GPU version will, however, only work on Linux machines. This is because on Windows and OS X, Docker runs inside a Virtual Box VM which does not have access to the GPU on the host.
+Here are Dockerfiles to get you up and running with a fully functional deep learning machine. It contains all the popular deep learning frameworks with CPU and GPU support (CUDA and cuDNN included). The CPU version should work on Linux, Windows and OS X. The GPU version will, however, only work on Linux machines. See [OS support](#what-operating-systems-are-supported) for details
 
 If you are not familiar with Docker, but would still like an all-in-one solution, start here: [What is Docker?](#what-is-docker)
 
@@ -21,28 +21,41 @@ This is what you get out of the box when you create a container with the provide
 ## Setup
 ### Prerequisites
 1. Install Docker following the installation guide for your platform: [https://docs.docker.com/engine/installation/](https://docs.docker.com/engine/installation/)
-2. **GPU Version Only**: Install Nvidia drivers on your machine either from [Nvidia](http://www.nvidia.com/Download/index.aspx?lang=en-us) directly or follow the instructions [here](https://github.com/saiprashanths/dl-setup#nvidia-drivers). Note that you **don't** have to install CUDA and cuDNN on your host machine. These are included in the Docker container.
-3. **GPU Version Only**: Install nvidia-docker. Follow the instructions here: [https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker). This will install a replacement for the docker client. It takes care of setting up the Nvidia host driver environment inside the Docker containers and a few other things.
-4. Build the Docker image. Note that this will take an hour or two depending on your machine since it compiles a few libraries from scratch.
 
+2. **GPU Version Only**: Install Nvidia drivers on your machine either from [Nvidia](http://www.nvidia.com/Download/index.aspx?lang=en-us) directly or follow the instructions [here](https://github.com/saiprashanths/dl-setup#nvidia-drivers). Note that you **don't** have to install CUDA or cuDNN. These are included in the Docker container.
+
+3. **GPU Version Only**: Install nvidia-docker: [https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker). Follow the instructions [here](https://github.com/NVIDIA/nvidia-docker/wiki/Installation). This will install a replacement for the docker CLI. It takes care of setting up the Nvidia host driver environment inside the Docker containers and a few other things.
+
+### Build the Docker image
+4. Note that this will take an hour or two depending on your machine since it compiles a few libraries from scratch.
+
+	```bash
 	git clone https://github.com/saiprashanths/dl-docker.git
 	cd dl-docker
+	```	
 	
-**CPU Version**
+	**CPU Version**
+	```bash
 	docker build -t dl-docker:cpu github.com/saiprashanths/dl-docker.git -f Dockerfile.cpu .
+	```
 
-**GPU Version**
+	**GPU Version**
+	```bash
 	docker build -t dl-docker:gpu github.com/saiprashanths/dl-docker.git -f Dockerfile.gpu .
+	```
   
 ## Running the Docker image as a Container
-
 This will spin up a Docker container for you with all the frameworks installed. 
 
 **CPU Version**
-	docker run -it -p 8888:8888 6006:6006 -v /sharedfolder:/root/sharedfolder dl-docker:cpu bash
-		
+```bash
+docker run -it -p 8888:8888 6006:6006 -v /sharedfolder:/root/sharedfolder dl-docker:cpu bash
+```
+	
 **GPU Version**
-	nvidia-docker run -it -p 8888:8888 6006:6006 dl-docker:gpu bash
+```bash
+nvidia-docker run -it -p 8888:8888 6006:6006 dl-docker:gpu bash
+```
 Note the use of `nvidia-docker` rather than just `docker`
 
 | Parameter      | Explanation |
@@ -54,7 +67,6 @@ Note the use of `nvidia-docker` rather than just `docker`
 |`bash`       | This provides the default command when the container is started. Even if this was not provided, bash is the default command and just starts a Bash session. You can modify this to be whatever you'd like to be executed when your container starts. For example, you can execute `docker run -it -p 8888:8888 6006:6006 dl-docker:cpu jupyter notebook`. This will execute a script that executes the command `jupyter notebook` and starts your Jupyter Notebook for you when the container starts
 
 ## Some common scenarios
-
 ### Notebook
 The image comes pre-installed with iPython and iTorch Notebooks, and you can use this to work with the deep learning frameworks. If you spin up the docker container with docker-run -p <host-port>:<container-port> (as shown above in the [instructions](#running-the-Docker-image-as-a-Container)), you will have access to these ports on your host and can access them at http://127.0.0.1:<host-port>. The default iPython notebook uses port 8888 and Tensorboard uses port 6006. Since we expose both these ports when we run the container, we can access them both from the host.
 
@@ -66,7 +78,7 @@ See [Docker container persistence](#Docker-container-persistence). Consider this
 ## What is Docker?
 [Docker](https://www.docker.com/what-docker) itself has a great answer to this question.
 
-Docker is based on the idea that one can package code along with its dependencies into a self-contained unit. In this case, we start with a base Ubuntu 14.04 image, a bare minimum OS. When we build our initial Docker image using _docker build_, we install all the deep learning frameworks and its dependencies on the base, as defined by the _Dockerfile_. This gives us an image which has all the packages we need installed in it. We can now spin up as many instances of this image as we like, using the _docker run_ command. Each instance is called a _container_. Each of these containers can be thought of as a fully functional and isolated OS with all the deep learning libraries installed in it. 
+Docker is based on the idea that one can package code along with its dependencies into a self-contained unit. In this case, we start with a base Ubuntu 14.04 image, a bare minimum OS. When we build our initial Docker image using `docker build`, we install all the deep learning frameworks and its dependencies on the base, as defined by the `Dockerfile`. This gives us an image which has all the packages we need installed in it. We can now spin up as many instances of this image as we like, using the `docker run` command. Each instance is called a _container_. Each of these containers can be thought of as a fully functional and isolated OS with all the deep learning libraries installed in it. 
 
 ## Why do I need a Docker?
 Installing all the deep learning frameworks correctly is an exercise in dependency hell. Unfortunately, given the current state of DL development and research, it is almost impossible to rely on just one framework. This Docker is intended to provide a solution for this use case.
@@ -85,7 +97,6 @@ The Docker philosophy is to build a container for each logical task/framework. I
 * [Torch Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-torch-plus)
 
 ## FAQs
-
 ### Performance
 Running the DL frameworks as Docker containers should have no performance impact during runtime. Spinning up a Docker container itself is very fast and should take only a couple of seconds or less
 
@@ -97,4 +108,4 @@ Keep in mind that the changes made inside Docker container are not persistent. L
 2. **Shared volume**: If you don't make changes to the image itself, but only create data (say, train a new Caffe model), then commiting the image each time is an overkill. In this case, it is easier to persist the data changes to a folder on your host OS using shared volumes. Simple put, the way this works is you share a folder from your host into the container. Any changes made to the contents of this folder from inside the container will persist, even after the container is killed. For more details, see Docker's docs on [Managing data in containers](https://docs.docker.com/engine/reference/commandline/commit/)
  
 ### What operating systems are supported?
-Docker is supported on all the OSes mentioned here: [Install Docker Engine](https://docs.docker.com/engine/installation/). The CPU version (Dockerfile.cpu) will run on all the above operating systems. However, the GPU version will only run on Linux OS. This is because Docker runs inside a virtual machine on Windows and OS X. Virtual machines don't have direct access to the GPU on the host. Unless PCI passthrough is implemented for these hosts, GPU support isn't available on non-Linux OSes.
+Docker is supported on all the OSes mentioned here: [Install Docker Engine](https://docs.docker.com/engine/installation/) (i.e. different flavors of Linux, Windows and OS X). The CPU version (Dockerfile.cpu) will run on all the above operating systems. However, the GPU version will only run on Linux OS. This is because Docker runs inside a virtual machine on Windows and OS X. Virtual machines don't have direct access to the GPU on the host. Unless PCI passthrough is implemented for these hosts, GPU support isn't available on non-Linux OSes at the moment.
