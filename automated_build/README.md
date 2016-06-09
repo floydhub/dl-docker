@@ -1,0 +1,2 @@
+### Please do not use these `Dockerfiles` directly
+These files are intended for Docker Hub's automated build process. The automated build for `Dockerfile.gpu` fails due to timeout restrictions (see [https://github.com/saiprashanths/dl-docker/issues/2](https://github.com/saiprashanths/dl-docker/issues/2)). To overcome this, `Dockerfile.gpu` is split into 2 parts: `Dockerfile.gpu1` and `Dockerfile.gpu2`. These files are used to build the final `dl-docker:gpu` that you can pull directly from Docker Hub using `docker pull floydhub/dl-docker:gpu`. 
