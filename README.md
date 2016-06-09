@@ -26,8 +26,21 @@ This is what you get out of the box when you create a container with the provide
 
 3. **GPU Version Only**: Install nvidia-docker: [https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker), following the instructions [here](https://github.com/NVIDIA/nvidia-docker/wiki/Installation). This will install a replacement for the docker CLI. It takes care of setting up the Nvidia host driver environment inside the Docker containers and a few other things.
 
-### Build the Docker image
-Note that this will take an hour or two depending on your machine since it compiles a few libraries from scratch.
+### Obtaining the Docker image
+You have 2 options to obtain the Docker image
+#### Option 1: Download the Docker image from Docker Hub
+Docker Hub is a cloud based repository of pre-built images. You can download the image directly from here, which should be _much faster_ than building it locally (a few minutes, based on your internet speed). Here is the automated build page for `dl-docker`: [https://hub.docker.com/r/floydhub/dl-docker/](https://hub.docker.com/r/floydhub/dl-docker/). The image is automatically built based on the `Dockerfile` in the Github repo.
+
+**CPU Version**
+```bash
+docker pull floydhub/dl-docker:cpu
+```
+
+**GPU Version**
+An automated build for the GPU image is not available currently due to timeout restrictions in Docker's automated build process. I'll look into solving this in the future, but for now you'll have to build the GPU version locally using Option 2 below.
+
+#### Option 2: Build the Docker image locally
+Alternatively, you can build the images locally. Also, since the GPU version is not available in Docker Hub at the moment, you'll have to follow this if you want to GPU version. Note that this will take an hour or two depending on your machine since it compiles a few libraries from scratch.
 
 ```bash
 git clone https://github.com/saiprashanths/dl-docker.git
