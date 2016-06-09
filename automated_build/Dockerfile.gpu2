@@ -1,4 +1,4 @@
-FROM floydhub/dl-docker:gpu1
+FROM floydhub/dl-docker:gpu_temp
 
 MAINTAINER Sai Soundararaj <saip@outlook.com>
 
