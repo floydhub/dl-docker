@@ -109,7 +109,7 @@ The Docker philosophy is to build a container for each logical task/framework. I
 * [Theano Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-theano)
 * [Keras Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-keras/cuda_v7.5)
 * [Lasagne Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-lasagne/cuda_v7.5)
-* [Torch Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-torch-plus)
+* [Torch Docker](https://github.com/Kaixhin/dockerfiles/tree/master/cuda-torch)
 
 ## FAQs
 ### Performance
