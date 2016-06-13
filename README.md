@@ -49,12 +49,12 @@ cd dl-docker
 
 **CPU Version**
 ```bash
-docker build -t dl-docker:cpu -f Dockerfile.cpu .
+docker build -t floydhub/dl-docker:cpu -f Dockerfile.cpu .
 ```
 
 **GPU Version**
 ```bash
-docker build -t dl-docker:gpu -f Dockerfile.gpu .
+docker build -t floydhub/dl-docker:gpu -f Dockerfile.gpu .
 ```
 This will build a Docker image named `dl-docker` and tagged either `cpu` or `gpu` depending on the tag your specify. Also note that the appropriate `Dockerfile.<architecture>` has to be used.
 
@@ -63,12 +63,12 @@ Once we've built the image, we have all the frameworks we need installed in it. 
 
 **CPU Version**
 ```bash
-docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder dl-docker:cpu bash
+docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder floydhub/dl-docker:cpu bash
 ```
 	
 **GPU Version**
 ```bash
-nvidia-docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder dl-docker:gpu bash
+nvidia-docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder floydhub/dl-docker:gpu bash
 ```
 Note the use of `nvidia-docker` rather than just `docker`
 
