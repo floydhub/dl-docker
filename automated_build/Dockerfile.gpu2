@@ -42,29 +42,3 @@ ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/
 	LD_LIBRARY_PATH=/root/torch/install/lib:$LD_LIBRARY_PATH \
 	DYLD_LIBRARY_PATH=/root/torch/install/lib:$DYLD_LIBRARY_PATH
 ENV LUA_CPATH='/root/torch/install/lib/?.so;'$LUA_CPATH
-
-# Install the latest versions of nn, cutorch, cunn, cuDNN bindings and iTorch
-RUN luarocks install nn && \
-	luarocks install cutorch && \
-	luarocks install cunn && \
-	\
-	cd /root && git clone https://github.com/soumith/cudnn.torch.git && cd cudnn.torch && \
-	git checkout R4 && \
-	luarocks make && \
-	\
-	cd /root && git clone https://github.com/facebook/iTorch.git && \
-	cd iTorch && \
-	luarocks make
-
-
-# Set up notebook config
-COPY jupyter_notebook_config.py /root/.jupyter/
-
-# Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
-COPY run_jupyter.sh /root/
-
-# Expose Ports for TensorBoard (6006), Ipython (8888)
-EXPOSE 6006 8888
-
-WORKDIR "/root"
-CMD ["/bin/bash"]
