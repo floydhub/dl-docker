@@ -12,17 +12,17 @@ ARG CAFFE_VERSION=master
 
 
 # Install the latest versions of nn, cutorch, cunn, cuDNN bindings and iTorch
-RUN luarocks install nn && \
-	luarocks install cutorch && \
-	luarocks install cunn && \
+RUN luarocks install nn > /dev/null && \
+	luarocks install cutorch > /dev/null && \
+	luarocks install cunn > /dev/null&& \
 	\
 	cd /root && git clone https://github.com/soumith/cudnn.torch.git && cd cudnn.torch && \
 	git checkout R4 && \
-	luarocks make && \
+	luarocks make > /dev/null && \
 	\
 	cd /root && git clone https://github.com/facebook/iTorch.git && \
 	cd iTorch && \
-	luarocks make
+	luarocks make > /dev/null
 
 
 # Set up notebook config
