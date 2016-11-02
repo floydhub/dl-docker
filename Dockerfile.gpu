@@ -120,7 +120,7 @@ RUN apt-get update && apt-get install -y \
 	apt-get autoremove && \
 	rm -rf /var/lib/apt/lists/*
 
-# Install Caffe 
+# Install Caffe
 RUN git clone -b ${CAFFE_VERSION} --depth 1 https://github.com/BVLC/caffe.git /root/caffe && \
 	cd /root/caffe && \
 	cat python/requirements.txt | xargs -n1 pip install && \
@@ -175,6 +175,7 @@ ENV LUA_CPATH='/root/torch/install/lib/?.so;'$LUA_CPATH
 RUN luarocks install nn && \
 	luarocks install cutorch && \
 	luarocks install cunn && \
+    luarocks install loadcaffe && \
 	\
 	cd /root && git clone https://github.com/soumith/cudnn.torch.git && cd cudnn.torch && \
 	git checkout R4 && \

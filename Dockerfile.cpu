@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y \
 	apt-get autoremove && \
 	rm -rf /var/lib/apt/lists/*
 
-# Install Caffe 
+# Install Caffe
 RUN git clone -b ${CAFFE_VERSION} --depth 1 https://github.com/BVLC/caffe.git /root/caffe && \
 	cd /root/caffe && \
 	cat python/requirements.txt | xargs -n1 pip install && \
@@ -167,6 +167,7 @@ ENV LUA_CPATH='/root/torch/install/lib/?.so;'$LUA_CPATH
 
 # Install the latest versions of nn, and iTorch
 RUN luarocks install nn && \
+    luarocks install loadcaffe && \
 	\
 	cd /root && git clone https://github.com/facebook/iTorch.git && \
 	cd iTorch && \
