@@ -6,8 +6,8 @@ If you are not familiar with Docker, but would still like an all-in-one solution
 ## Specs
 This is what you get out of the box when you create a container with the provided image/Dockerfile:
 * Ubuntu 14.04
-* [CUDA 7.5](https://developer.nvidia.com/cuda-toolkit) (GPU version only)
-* [cuDNN v4](https://developer.nvidia.com/cudnn) (GPU version only)
+* [CUDA 8.0](https://developer.nvidia.com/cuda-toolkit) (GPU version only)
+* [cuDNN v5](https://developer.nvidia.com/cudnn) (GPU version only)
 * [Tensorflow](https://www.tensorflow.org/)
 * [Caffe](http://caffe.berkeleyvision.org/)
 * [Theano](http://deeplearning.net/software/theano/)
