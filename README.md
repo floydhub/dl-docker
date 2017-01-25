@@ -3,6 +3,9 @@ Here are Dockerfiles to get you up and running with a fully functional deep lear
 
 If you are not familiar with Docker, but would still like an all-in-one solution, start here: [What is Docker?](#what-is-docker). If you know what Docker is, but are wondering why we need one for deep learning, [see this](#why-do-i-need-a-docker)
 
+## Update: I've built a quick tool based on dl-docker. Start running your Tensorflow project on AWS in <30seconds using Floyd. See [www.floydhub.com](https://www.floydhub.com). It's free to try out. 
+### Happy to take feature requests/feedback and answer questions - mail me sai@floydhub.com.
+
 ## Specs
 This is what you get out of the box when you create a container with the provided image/Dockerfile:
 * Ubuntu 14.04
