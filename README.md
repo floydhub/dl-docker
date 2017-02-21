@@ -19,6 +19,7 @@ This is what you get out of the box when you create a container with the provide
 * [Torch](http://torch.ch/) (includes nn, cutorch, cunn and cuDNN bindings)
 * [iPython/Jupyter Notebook](http://jupyter.org/) (including iTorch kernel)
 * [Numpy](http://www.numpy.org/), [SciPy](https://www.scipy.org/), [Pandas](http://pandas.pydata.org/), [Scikit Learn](http://scikit-learn.org/), [Matplotlib](http://matplotlib.org/)
+* [OpenCV](http://opencv.org/)
 * A few common libraries used for deep learning
 
 ## Setup
