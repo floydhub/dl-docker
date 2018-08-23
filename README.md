@@ -1,5 +1,7 @@
 [Website](https://www.floydhub.com) • [Docs](https://docs.floydhub.com) • [Forum](https://forum.floydhub.com) • [Twitter](https://twitter.com/floydhub_) • [We're Hiring](https://angel.co/floydhub)
 
+[![FloydHub Logo](https://github.com/floydhub/static/blob/master/Group.png)](https://www.floydhub.com)
+
 ## All-in-one Docker image for Deep Learning
 Here are Dockerfiles to get you up and running with a fully functional deep learning machine. It contains all the popular deep learning frameworks with CPU and GPU support (CUDA and cuDNN included). The CPU version should work on Linux, Windows and OS X. The GPU version will, however, only work on Linux machines. See [OS support](#what-operating-systems-are-supported) for details
 
